@@ -4,6 +4,8 @@
 </p>
 
 
+Att: Demo version
+
 An simple script to scrappe deepweb to find pages. Will return if any of those exists and will save on a file. You should specify the name of the file to save.
 If you wish to estimate the amount of requests, just multiply the number of the threads with the depth number.
 
