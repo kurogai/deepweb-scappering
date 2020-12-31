@@ -29,4 +29,5 @@ Screenshot with 30 million requests:
 ## Requeriments
 
 * Linux (any distro)
+* TOR
 * Python3 (requests, threading ,json, termcolor, string, bs4, socks, socket, random)
