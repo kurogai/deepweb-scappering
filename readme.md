@@ -28,7 +28,7 @@ Screenshot with 30 million requests:
 * Search for links using dicionaries (for DarkWeb)
 * More improves
 
-## Requeriments
+## Requirements
 
 * Linux (any distro)
 * TOR
