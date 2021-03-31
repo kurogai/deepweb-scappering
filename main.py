@@ -1,59 +1,33 @@
 import threading
-import json
 from termcolor import colored
 from scrappe import web_scappre
+from file_create import createFile
+from banner import banner
+import argparse
 
-def t(n,p,f):
-    w = web_scappre()
-    r = w.scan_link()
-    
-    if r['status'] == 200:
-        print(colored(("[-] [  ",r['status']," ] - [",r['link'],"] - [",r['title'],"] - [",p,"%]"),"green"))
 
-        with open(f,"a") as _file:
-            #a = str("[",r['link'],"] - [",r['title'],"]\n")
-            a = json.dumps(r)
-            _file.write(a)
-            _file.close()
-    else:
-        print("[-] [  ",r['status']," ] - [",r['link'],"] - [",r['title'],"] - [",p,"%]")
+parser = argparse.ArgumentParser()
+parser.add_argument("size",help="Informe o total de links a serem encontrados!", type=int)
+parser.add_argument("threads",help="Informe o total de threads", type=int)
+parser.add_argument("filename",help="Informe o nome e local do arquivo a ser criado", type=str)
+args = parser.parse_args()
 
-    return r
 
 def main():
 
-    size = int(input("DeepWebFindLink (enter max depth size) -> "))
-    t_size = int(input("DeepWebFindLink (enter thread size) -> "))
-    file = str(input("DeepWebFindLink (output name) -> "))
+    size = args.size
+    total_threads = args.threads
+    file = args.filename
 
-    print("[ DeepWeb Find Link -> Scappre the deepweb to find links")
-    print("[+] Made by: Kurogai")
-    print("[Github] -> https://github.com/kurogai")
-    print("\n\n")
-    print("[ n ] [ Status ] - [              link              ] - [ Title ]")
-    
-    # calculate percent of 10% each time
-    perc = str((size / 100) * 10)
-    
-    try:
-        for s in range(size):
-            count = str((s / size) * 10)
-            count = count[:10]
-            
-            for t_l in range(t_size):
-                thread = threading.Thread(target=t,args=(s,count,file,))
-                thread.start()
-            
+    banner()
 
-    except KeyboardInterrupt:
-        print("[Paused] Continue? (s/n) :",end="")
-        x = str(input())
+    threads = list()
+    for index in range(1,total_threads):
+        currentThread = threading.Thread(target=web_scappre.getScrapped,args=(index,file))
+        threads.append(currentThread)
+        
+        currentThread.start()
 
-        if x == "s":
-            pass
-        else:
-            print("[+] Saved output to current folder, exiting")
-            exit()
 
 
 if __name__ == '__main__':
